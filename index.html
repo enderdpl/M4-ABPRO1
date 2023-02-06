@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>modulo 4</title>
+</head>
+<body>
+    <div id="mostarInf"></div>
+
+    <input type="text" id="buscador" placeholder=" nombre del paciente">
+    <input class="inputEditar" type="text" id="nombre" placeholder=" editar nombre">
+    <input class="inputEditar" type="text" id="rut" placeholder="rut">
+    <input class="inputEditar" type="text" id="edad" placeholder=" edad">
+
+    <button onclick="busca(name)">buscar</button>
+    <button onclick="editar()" id="editar">editar datos</button>
+    
+
+    <button onclick="guardar(nombre)" id="guardar">guardar datos</button>
+
+    <script src="consultorio.js"></script>
+    <script src="Paciente.js "></script>
+    <script src="datos.js"></script>
+
+    <script>
+        baseDatos[0].nombre= "pedro"
+        
+        const div= document.getElementById('mostarInf');
+        const buscador= document.getElementById('buscador');
+        const botonEditar= document.getElementById('editar')
+        const botonGuardar= document.getElementById('guardar')
+        const inputName=document.querySelector("#nombre")
+
+
+        const pacienteArray=[]
+
+        baseDatos.forEach(element => {
+            const  paciente= new Paciente (element.nombre, element.rut, element.edad, element.diagnostico)
+            pacienteArray.push(paciente)
+
+            div.innerHTML +=  paciente.getNombre() + paciente.getRut() + paciente.getEdad() + paciente.getDiagnostico() + '<br/> ';
+        });
+
+        console.log('pacienteArray',pacienteArray) 
+
+        const consultorio= new Consultorio("viña", pacienteArray)
+        console.log(consultorio.getPacientes())
+        
+        function busca(name){
+            //se muestra el boton de editar
+            botonEditar.style.display="flex"
+
+            console.log("funciona el click")
+            // creamos la instancia
+            const pacienteEncontrado = consultorio.search(buscador.value)
+            console.log(pacienteEncontrado)
+            // mostarmos en pantalla
+            div.innerHTML= " "
+                pacienteEncontrado.forEach(element => {
+                div.innerHTML+= element.nombre + " " +element.rut + " " + element.edad + " " + element.diagnostico +   '<br/> ';
+                
+                // guardar(element.nombre)
+            })
+
+        }
+        function editar(){
+            console.log("editar")
+            botonGuardar.style.display="flex"
+            inputName.style.display="flex"
+
+
+
+        }
+
+        function guardar(nombre){
+            console.log(nombre)
+            nombre = pacienteEncontrado.nombre
+            console.log(nombre)
+            
+
+        }
+
+        //FUNCION DE BUSQUEDA BUENA PERO SIN LLAMAR METODOS
+
+        // function busca(name){
+        //     const resultado=baseDatos.filter(persona => persona.nombre==buscador.value)
+        //     console.log(resultado)
+        //     div.innerHTML= " "
+        //     resultado.forEach(element => {
+        //         div.innerHTML+= element.nombre + " " +element.rut + " " + element.edad + " " + element.diagnostico +   '<br/> ';
+
+        //     })
+
+
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
